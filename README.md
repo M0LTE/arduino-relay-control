@@ -10,4 +10,4 @@ Control relays using simple serial commands. Supports up to 10 relays.
 
 If the outputs are the wrong way around for your board, change invert to true in the sketch and upload it again.
 
-There's also a couple of variants which support a DHT11 temp/humidity sensor, and DS18B20 temp sensors (plural).
+There's also a couple of variants which support a DHT11 temp/humidity sensor, and DS18B20 temp sensors (plural), outputting the values to serial every minute by default.
