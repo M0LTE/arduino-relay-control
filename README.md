@@ -1,5 +1,5 @@
 # arduino-relay-control
-Control relays using simple serial commands.
+Control relays using simple serial commands. Supports up to 10 relays.
 
 ## How to use
 - Connect relays to digital output pins on whatever Arduino via appropriate isolation circuitry, starting at some pin (default 5), sequentially
