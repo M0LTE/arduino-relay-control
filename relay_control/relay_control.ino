@@ -5,11 +5,17 @@ const int relays = 8;
 const int startPin = 5; 
 
 // invert relay state
-const bool invert = true;
+const bool invert = false;
+
+// turn on all outputs at startup
+const bool onByDefault = true;
 
 void setup() {
   for (int i = startPin; i < startPin + relays; i++){
     pinMode(i, OUTPUT);
+    if (onByDefault) {
+      digitalWrite(i, invert ? LOW : HIGH);
+    }
   }
   Serial.begin(9600);
   Serial.println("https://github.com/M0LTE/arduino-relay-control");
@@ -52,10 +58,10 @@ void loop() {
       } else {
         if (read == '0'){
           Serial.println("off");
-          digitalWrite(pin + startPin, invert ? LOW : HIGH);
+          digitalWrite(pin + startPin, invert ? HIGH : LOW);
         } else {
           Serial.println("on");
-          digitalWrite(pin + startPin, invert ? HIGH : LOW);
+          digitalWrite(pin + startPin, invert ? LOW : HIGH);
         }
         state=0;
       }
