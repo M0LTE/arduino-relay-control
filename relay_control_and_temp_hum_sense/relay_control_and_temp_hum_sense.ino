@@ -4,7 +4,7 @@
 const int relays = 8;
 
 // relays connected to this pin number and up
-const int startPin = 5; 
+const int startPin = 3; 
 
 // invert relay state
 const bool invert = false;
