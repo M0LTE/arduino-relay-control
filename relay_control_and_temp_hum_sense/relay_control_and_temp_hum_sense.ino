@@ -10,7 +10,7 @@ const int startPin = 3;
 const bool invert = false;
 
 // turn on all outputs at startup
-const bool onByDefault = true;
+const bool onByDefault = false;
 
 // this sketch supports a DHT11 temperature and humidity sensor and 
 // outputs the value to the serial port regularly
