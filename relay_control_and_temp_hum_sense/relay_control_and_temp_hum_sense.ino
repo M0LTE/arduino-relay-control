@@ -21,6 +21,21 @@ DHT11 dht11(tempSensorPin);
 int temperature;
 int humidity;
 
+void readTemperature()
+{
+  int result = dht11.readTemperatureHumidity(temperature, humidity);
+  if (result == 0){
+    Serial.print("sensor: ");
+    Serial.print(temperature);
+    Serial.print("C ");
+    Serial.print(humidity);
+    Serial.println("%");
+  } else {
+    Serial.print("error: ");
+    Serial.println(DHT11::getErrorString(result));
+  }
+}
+
 void setup() {
   for (int i = startPin; i < startPin + relays; i++){
     pinMode(i, OUTPUT);
@@ -29,31 +44,23 @@ void setup() {
     }
   }
   Serial.begin(9600);
-  Serial.println("https://github.com/M0LTE/arduino-relay-control");
-  Serial.println("waiting for commands in the form r01, e.g. relay 0 on");
+  Serial.println("info: This board runs firmware from https://github.com/M0LTE/arduino-relay-control");
+  Serial.println("info: It takes commands in the form r01, e.g. relay 0 on. No line breaks expected.");
+  Serial.print("config: { \"relays\": ");
+  Serial.print(relays);
+  Serial.print(", \"startPin\": ");
+  Serial.print(startPin);
+  Serial.print(", \"invert\": ");
+  Serial.print(invert);
+  Serial.print(", \"onByDefault\": ");
+  Serial.print(onByDefault);
+  Serial.print(", \"tempSensorPin\": ");
+  Serial.print(tempSensorPin);
+  Serial.print(", \"tempRefreshInterval\": ");
+  Serial.print(TEMP_REFRESH_INTERVAL);
+  Serial.println(" }");
 
-  int result = dht11.readTemperatureHumidity(temperature, humidity);
-  if (result == 0){
-    Serial.print(temperature);
-    Serial.print("C ");
-    Serial.print(humidity);
-    Serial.println("%");
-  } else {
-    Serial.println(DHT11::getErrorString(result));
-  }
-}
-
-void readTemperature()
-{
-  int result = dht11.readTemperatureHumidity(temperature, humidity);
-  if (result == 0){
-    Serial.print(temperature);
-    Serial.print("C ");
-    Serial.print(humidity);
-    Serial.println("%");
-  } else {
-    Serial.println(DHT11::getErrorString(result));
-  }
+  readTemperature();
 }
 
 void doTemperature()
@@ -81,6 +88,11 @@ void loop() {
     }
     
     if (state == 0){
+      if (read == '?'){
+        Serial.println("ok");
+        return;
+      }
+
       if (read != 'r'){
         Serial.println("expected r");
         return;
