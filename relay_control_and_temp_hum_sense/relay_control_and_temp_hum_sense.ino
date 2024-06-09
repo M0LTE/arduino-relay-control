@@ -61,6 +61,7 @@ void setup() {
   Serial.println(" }");
 
   readTemperature();
+  Serial.println("info: ready");
 }
 
 void doTemperature()
@@ -89,18 +90,18 @@ void loop() {
     
     if (state == 0){
       if (read == '?'){
-        Serial.println("ok");
+        Serial.println("info: ok");
         return;
       }
 
       if (read != 'r'){
-        Serial.println("expected r");
+        Serial.println("error: expected r");
         return;
       }
       state=1;
     } else if (state == 1) {
       if (read < '0' || read > '0' + relays - 1) {  // '7'
-        Serial.println("expected 0-7");
+        Serial.println("error: expected 0-7");
         state=0;
       } else {
         pin = read - '0';
@@ -109,11 +110,11 @@ void loop() {
       return;
     } else if (state == 2) {
       if (read != '0' && read != '1'){
-        Serial.println("expected 0 or 1");
+        Serial.println("error: expected 0 or 1");
         state=0;
         return;
       } else {
-        Serial.print("relay ");
+        Serial.print("info: relay ");
         Serial.print(pin);
         if (read == '0'){
           Serial.println(" off");
